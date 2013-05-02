@@ -3,7 +3,7 @@
   Plugin Name:  Admin Slug Column
   Plugin URI:   http://wordpress.org/extend/plugins/admin-slug-column/
   Description:  put the slug of post and page in the admin columns
-  Version:      0.002
+  Version:      0.2
   Author:       Chuck Reynolds
   Author URI:   http://chuckreynolds.us
   Text Domain:  admin-slug-column
