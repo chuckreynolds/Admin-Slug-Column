@@ -26,7 +26,7 @@
   along with this program. If not, see http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-if (!class_exists("wpAdminSlugColumn")) {
+if ( !class_exists( "wpAdminSlugColumn" ) ) {
   class wpAdminSlugColumn {
 
     public function __construct() {
@@ -43,7 +43,7 @@ if (!class_exists("wpAdminSlugColumn")) {
     }
     public function SAC_posts_data($column_name, $id) {
       if( $column_name == 'SAC_Slug' ) {
-        $post_slug = get_post($ID = $id)->post_name;
+        $post_slug = get_post($id)->post_name;
         echo $post_slug;
       }
     }
@@ -55,7 +55,7 @@ if (!class_exists("wpAdminSlugColumn")) {
     }
     public function SAC_pages_data($column_name, $id) {
       if( $column_name == 'SAC_Slug' ) {
-          $page_slug = get_page($ID = $id)->post_name;
+          $page_slug = get_page($id)->post_name;
           echo $page_slug;
       }
     }
