@@ -1,4 +1,4 @@
-=== admin slug column ===
+=== Admin Slug Column ===
 Contributors: ryno267
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3TGB4BDCPFTHL
 Tags: slug, admin columns, permalink, url, page titles
