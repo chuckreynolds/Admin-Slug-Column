@@ -3,15 +3,15 @@ Contributors: ryno267
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3TGB4BDCPFTHL
 Tags: slug, admin columns, permalink, url, page titles
 Requires at least: 3.2.1
-Tested up to: 3.8.1
+Tested up to: 3.9
 Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Puts the slug of post and page into the admin column. Helps when page titles don't explain what the page is or too many are similar.
+Puts the slug of posts and pages into an admin column on all posts/pages screen. It helps when page titles don't explain what the page is or too many are similar.
 
 == Description ==
-Simply put, this plugin adds the page and post slug into the admin columns.
+Simply put, this plugin adds the page and post slug into the admin columns on the All post and All pages view.
 I built this quickly out of necessity to help identify pages and posts by their slug as sometimes the titles clients give them don't match up nicely with the url slug; so here's a fast way to do that. Nothing fancy, just does what it does.
 
 == Installation ==
@@ -29,7 +29,8 @@ Built quickly out of necessity to help identify pages and posts by their slug. S
 
 == Changelog ==
 = 0.2.1 =
-* basic cleanup; just for dev; probably won't push to wp repo
+* basic cleanup
+* tested to 3.9
 = 0.2 =
 * make oop and class
 = 0.1 =
