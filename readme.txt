@@ -3,8 +3,8 @@ Contributors: ryno267
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3TGB4BDCPFTHL
 Tags: slug, admin columns, permalink, url, page titles
 Requires at least: 3.2.1
-Tested up to: 4.0
-Stable tag: 0.2.1
+Tested up to: 4.2
+Stable tag: 0.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,10 +28,16 @@ Built quickly out of necessity to help identify pages and posts by their slug. S
 
 
 == Changelog ==
+= 0.2.2 =
+* wp code formatting
+* tested to 4.2
+
 = 0.2.1 =
 * basic cleanup
 * tested to 4.0
+
 = 0.2 =
 * make oop and class
+
 = 0.1 =
 * Initial version to github; rough; makes slug columns yay
