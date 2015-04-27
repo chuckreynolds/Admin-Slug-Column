@@ -5,7 +5,7 @@ Plugin URI:   http://wordpress.org/plugins/admin-slug-column/
 Description:  put the slug of post and page in the admin columns
 Version:      0.2.2
 Author:       Chuck Reynolds
-Author URI:   http://chuckreynolds.us/?utm_source=admin+slug+column
+Author URI:   https://github.com/chuckreynolds/Admin-Slug-Column/
 Text Domain:  admin-slug-column
 
 License: GPLv2 or later
@@ -46,7 +46,7 @@ Class WPAdminSlugColumn {
 	*
 	* @return void
 	*/
-	public function SAC_posts($defaults) {
+	public function SAC_posts( $defaults ) {
 		$defaults['SAC_Slug'] = __( 'Post Slug' );
 		return $defaults;
 	}
