@@ -1,77 +1,74 @@
 <?php
-/*
-Plugin Name:  Admin Slug Column
-Plugin URI:   http://wordpress.org/plugins/admin-slug-column/
-Description:  put the slug of post and page in the admin columns
-Version:      0.2.2
-Author:       Chuck Reynolds
-Author URI:   https://github.com/chuckreynolds/Admin-Slug-Column/
-Text Domain:  admin-slug-column
+/**
+ * @link         https://chuckreynolds.us
+ * @since        0.3.0
+ * @package      Admin_Slug_Column
+ *
+ * Plugin Name:  Admin Slug Column
+ * Plugin URI:   http://wordpress.org/plugins/admin-slug-column/
+ * Description:  Adds the post/page url slug in the admin columns of the edit screens.
+ * Version:      0.3.0
+ * Author:       Chuck Reynolds
+ * Author URI:   https://chuckreynolds.us
+ * License:      GPL-2.0+
+ * License URI:  http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:  admin-slug-column
+ */
 
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
-Copyright 2014 Chuck Reynolds (email : chuck@rynoweb.com)
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as
-published by the Free Software Foundation.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
-*/
+// Only run plugin in the admin
+if ( ! is_admin() ) {
+	return false;
+}
 
 Class WPAdminSlugColumn {
 
 	/**
-	* This is the constructor for WPAdminSlugColumn Class
-	*
-	* @return void
+	* Constructor for WPAdminSlugColumn Class
 	*/
 	public function __construct() {
-		add_filter( 'manage_posts_columns', array( $this, 'SAC_posts' ) );
-		add_action( 'manage_posts_custom_column', array( $this, 'SAC_posts_data' ), 10, 2);
-		add_filter( 'manage_pages_columns', array( $this, 'SAC_pages' ) );
-		add_action( 'manage_pages_custom_column', array( $this, 'SAC_pages_data' ), 10, 2);
+		add_action( 'current_screen',             array( $this, 'WPASC_post_type' ) );
+		add_filter( 'manage_posts_columns',       array( $this, 'WPASC_posts' ) );
+		add_action( 'manage_posts_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
+		add_filter( 'manage_pages_columns',       array( $this, 'WPASC_posts' ) );
+		add_action( 'manage_pages_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
 	}
 
 	/**
-	* Adds slug to Posts column with option
-	*
-	* @return void
-	*/
-	public function SAC_posts( $defaults ) {
-		$defaults['SAC_Slug'] = __( 'Post Slug' );
-		return $defaults;
-	}
-
-	public function SAC_posts_data( $column_name, $id ) {
-		if ( $column_name == 'SAC_Slug' ) {
-			$post_slug = get_post( $id )->post_name;
-			echo $post_slug;
-		}
+	 * Returns an object that includes the current screen's post type
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/get_current_screen/
+	 */
+	public function WPASC_post_type() {
+		return get_current_screen()->post_type;
 	}
 
 	/**
-	* Adds slug to Pages column with option
-	*
-	* @return void
-	*/
-	public function SAC_pages( $defaults ) {
-		$defaults['SAC_Slug'] = __( 'Page Slug' );
+	 * Adds Slug column to Posts/Pages list column
+	 *
+	 * @param array $defaults An array of column names.
+	 */
+	public function WPASC_posts( $defaults ) {
+		$defaults['WPASC_Slug'] = __( 'Slug' );
 		return $defaults;
 	}
 
-	public function SAC_pages_data( $column_name, $id ) {
-		if ( $column_name == 'SAC_Slug' ) {
-			$page_slug = get_page( $id )->post_name;
-			echo $page_slug;
+	/**
+	 * Gets the post name from
+	 *
+	 * @param string $column_name Name of the column
+	 * @param int    $id          post id
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/get_post/
+	 */
+	public function WPASC_posts_data( $column_name, $id ) {
+		if ( $column_name == 'WPASC_Slug' ) {
+			$post_slug = get_post( $id, 'string', 'display' )->post_name;
+			echo esc_attr( $post_slug );
 		}
 	}
 

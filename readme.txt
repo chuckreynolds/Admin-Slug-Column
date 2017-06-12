@@ -1,12 +1,12 @@
 === Admin Slug Column ===
 Contributors: ryno267
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3TGB4BDCPFTHL
+Donate link: https://cash.me/$chuckreynolds
 Tags: slug, admin columns, permalink, url, page titles
-Requires at least: 3.2.1
-Tested up to: 4.2
-Stable tag: 0.2.2
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Requires at least: 3.5.0
+Tested up to: 4.8
+Stable tag: 0.3.0
+License: GPL-2.0+
+License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
 Puts the slug of posts and pages into an admin column on all posts/pages screen. It helps when page titles don't explain what the page is or too many are similar.
 
@@ -28,15 +28,33 @@ Built quickly out of necessity to help identify pages and posts by their slug. S
 
 
 == Changelog ==
+= 0.3.0 =
+
+Release Date - 2017-06-12
+
+* tested to 4.8x
+* [fix] swapped out deprecated wp function get_page
+* [security] escape output
+* [security] only load in admin
+
 = 0.2.2 =
+
+Release Date - 2015-04-27
+
 * wp code formatting
 * tested to 4.2
 
 = 0.2.1 =
+
+Release Date - 2014-09-04
+
 * basic cleanup
 * tested to 4.0
 
 = 0.2 =
+
+Release Date - 2013-05-07
+
 * make oop and class
 
 = 0.1 =
