@@ -31,11 +31,11 @@ Class WPAdminSlugColumn {
 	* Constructor for WPAdminSlugColumn Class
 	*/
 	public function __construct() {
-		add_action( 'current_screen',             array( $this, 'WPASC_post_type' ) );
-		add_filter( 'manage_posts_columns',       array( $this, 'WPASC_posts' ) );
-		add_action( 'manage_posts_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
-		add_filter( 'manage_pages_columns',       array( $this, 'WPASC_posts' ) );
-		add_action( 'manage_pages_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
+		add_action( 'current_screen',                    array( $this, 'WPASC_post_type' ) );
+		add_filter( 'manage_posts_columns',              array( $this, 'WPASC_posts' ) );
+		add_action( 'manage_posts_custom_column',        array( $this, 'WPASC_posts_data' ), 10, 2 );
+		add_filter( 'manage_pages_columns',              array( $this, 'WPASC_posts' ) );
+		add_action( 'manage_pages_custom_column',        array( $this, 'WPASC_posts_data' ), 10, 2 );
 		add_filter( 'manage_edit-post_sortable_columns', array( $this, 'WPASC_sort_posts' ) );
 		add_filter( 'manage_edit-page_sortable_columns', array( $this, 'WPASC_sort_posts' ) );
 	}
@@ -60,7 +60,7 @@ Class WPAdminSlugColumn {
 	}
 
 	/**
-	 * Gets the post name from
+	 * Gets the post name from get_post function and displays the slug
 	 *
 	 * @param string $column_name Name of the column
 	 * @param int    $id          post id
