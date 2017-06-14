@@ -36,6 +36,8 @@ Class WPAdminSlugColumn {
 		add_action( 'manage_posts_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
 		add_filter( 'manage_pages_columns',       array( $this, 'WPASC_posts' ) );
 		add_action( 'manage_pages_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
+		add_filter( 'manage_edit-post_sortable_columns', array( $this, 'WPASC_sort_posts' ) );
+		add_filter( 'manage_edit-page_sortable_columns', array( $this, 'WPASC_sort_posts' ) );
 	}
 
 	/**
@@ -53,7 +55,7 @@ Class WPAdminSlugColumn {
 	 * @param array $defaults An array of column names.
 	 */
 	public function WPASC_posts( $defaults ) {
-		$defaults['WPASC_Slug'] = __( 'Slug' );
+		$defaults['asc_slug'] = __( 'Slug', 'admin-slug-column' );
 		return $defaults;
 	}
 
@@ -66,10 +68,20 @@ Class WPAdminSlugColumn {
 	 * @see https://developer.wordpress.org/reference/functions/get_post/
 	 */
 	public function WPASC_posts_data( $column_name, $id ) {
-		if ( $column_name == 'WPASC_Slug' ) {
+		if ( $column_name == 'asc_slug' ) {
 			$post_slug = get_post( $id, 'string', 'display' )->post_name;
 			echo esc_attr( $post_slug );
 		}
+	}
+
+	/**
+	 * Adds Slug column to Posts/Pages sortable detection
+	 *
+	 * @param array $sortable_columns An array of sortable column names.
+	 */
+	public function WPASC_sort_posts( $sortable_columns ) {
+		$sortable_columns[ 'asc_slug' ] = 'asc_slug';
+		return $sortable_columns;
 	}
 
 }

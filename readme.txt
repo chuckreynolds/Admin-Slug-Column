@@ -33,7 +33,8 @@ Built quickly out of necessity to help identify pages and posts by their slug. S
 Release Date - 2017-06-12
 
 * tested to 4.8x
-* [fix] swapped out deprecated wp function get_page
+* [feature]  makes the slug column sortable in posts/pages screens
+* [fix]      swapped out deprecated wp function get_page
 * [security] escape output
 * [security] only load in admin
 
