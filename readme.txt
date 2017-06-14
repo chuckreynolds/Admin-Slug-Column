@@ -30,7 +30,7 @@ Built quickly out of necessity to help identify pages and posts by their slug. S
 == Changelog ==
 = 0.3.0 =
 
-Release Date - 2017-06-12
+Release Date - 2017-06-14
 
 * tested to 4.8x
 * [feature]  makes the slug column sortable in posts/pages screens
