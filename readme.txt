@@ -2,9 +2,9 @@
 Contributors: ryno267
 Donate link: https://cash.me/$chuckreynolds
 Tags: slug, admin columns, permalink, url, page titles
-Requires at least: 3.5.0
-Tested up to: 4.8
-Stable tag: 0.3.0
+Requires at least: 3.5
+Tested up to: 4.9
+Stable tag: 0.3.1
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -28,6 +28,12 @@ Built quickly out of necessity to help identify pages and posts by their slug. S
 
 
 == Changelog ==
+= 0.3.1 =
+
+Release Date - 2017-11-14
+
+* tested to 4.9
+
 = 0.3.0 =
 
 Release Date - 2017-06-14

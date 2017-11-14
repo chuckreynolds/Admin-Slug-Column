@@ -7,7 +7,7 @@
  * Plugin Name:  Admin Slug Column
  * Plugin URI:   http://wordpress.org/plugins/admin-slug-column/
  * Description:  Adds the post/page url slug in the admin columns of the edit screens.
- * Version:      0.3.0
+ * Version:      0.3.1
  * Author:       Chuck Reynolds
  * Author URI:   https://chuckreynolds.us
  * License:      GPL-2.0+
