@@ -7,7 +7,7 @@
  * Plugin Name:  Admin Slug Column
  * Plugin URI:   http://wordpress.org/plugins/admin-slug-column/
  * Description:  Adds the post/page url slug in the admin columns of the edit screens.
- * Version:      0.3.1
+ * Version:      0.4.0-beta
  * Author:       Chuck Reynolds
  * Author URI:   https://chuckreynolds.us
  * License:      GPL-2.0+
@@ -60,7 +60,7 @@ Class WPAdminSlugColumn {
 	}
 
 	/**
-	 * Gets the post name from get_post function and displays the slug
+	 * Gets the post info from get_post function and displays the slug
 	 *
 	 * @param string $column_name Name of the column
 	 * @param int    $id          post id
@@ -69,7 +69,34 @@ Class WPAdminSlugColumn {
 	 */
 	public function WPASC_posts_data( $column_name, $id ) {
 		if ( $column_name == 'asc_slug' ) {
-			$post_slug = get_post( $id, 'string', 'display' )->post_name;
+			$post_info   = get_post( $id, 'string', 'display' );
+			$post_slug   = $post_info->post_name;
+			$post_type   = $post_info->post_type;
+			$post_parent = $post_info->post_parent;
+			$post_status = $post_info->post_status;
+
+			// if post-type is page type we're going to do some extra stuff
+			if ( $post_type === 'page' ) {
+
+				// add root slash but only for published pages; ignore drafts
+				if ( $post_status === 'publish' ) {
+					$post_slug = '/' . $post_slug;
+				}
+
+				// add the parent slug in there too if this is a child page
+				if ( $post_parent > 0 ) {
+					$pre_post_slug = get_post_field( 'post_name', $post_parent, 'raw' );
+					$post_slug = '/' . $pre_post_slug . $post_slug;
+				}
+
+			}
+
+			// if this is the front page then just show root slash
+			$frontpage_id = get_option( 'page_on_front' );
+			if ( $frontpage_id == $id ) {
+				$post_slug = '/';
+			}
+
 			echo esc_attr( $post_slug );
 		}
 	}
