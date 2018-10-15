@@ -38,6 +38,7 @@ Class WPAdminSlugColumn {
 		add_action( 'manage_pages_custom_column',        array( $this, 'WPASC_posts_data' ), 10, 2 );
 		add_filter( 'manage_edit-post_sortable_columns', array( $this, 'WPASC_sort_posts' ) );
 		add_filter( 'manage_edit-page_sortable_columns', array( $this, 'WPASC_sort_posts' ) );
+		add_action( 'pre_get_posts',                     array( $this, 'WPASC_sort_posts_orderby' ) );
 	}
 
 	/**
@@ -55,7 +56,7 @@ Class WPAdminSlugColumn {
 	 * @param array $defaults An array of column names.
 	 */
 	public function WPASC_posts( $defaults ) {
-		$defaults['asc_slug'] = __( 'Slug', 'admin-slug-column' );
+		$defaults['wpasc-slug'] = __( 'Slug', 'admin-slug-column' );
 		return $defaults;
 	}
 
@@ -68,7 +69,7 @@ Class WPAdminSlugColumn {
 	 * @see https://developer.wordpress.org/reference/functions/get_post/
 	 */
 	public function WPASC_posts_data( $column_name, $id ) {
-		if ( $column_name == 'asc_slug' ) {
+		if ( $column_name == 'wpasc-slug' ) {
 			$post_info   = get_post( $id, 'string', 'display' );
 			$post_slug   = $post_info->post_name;
 			$post_type   = $post_info->post_type;
@@ -107,8 +108,22 @@ Class WPAdminSlugColumn {
 	 * @param array $sortable_columns An array of sortable column names.
 	 */
 	public function WPASC_sort_posts( $sortable_columns ) {
-		$sortable_columns[ 'asc_slug' ] = 'asc_slug';
+		$sortable_columns[ 'wpasc-slug' ] = 'wpasc-slug';
 		return $sortable_columns;
+	}
+
+	/**
+	 * Function to handle the sort ordering conditions
+	 *
+	 * @param array $query An array of admin url params
+	 */
+	public function WPASC_sort_posts_orderby( $query ) {
+		if ( ! $query->is_main_query() ) {
+			return;
+		}
+		if ( 'wpasc-slug' === $query->get( 'orderby') ) {
+			$query->set( 'orderby', 'post_name' );
+		}
 	}
 
 }
