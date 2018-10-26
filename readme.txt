@@ -3,16 +3,16 @@ Contributors: ryno267
 Donate link: https://cash.me/$chuckreynolds
 Tags: slug, admin columns, permalink, url, page titles
 Requires at least: 3.5
-Tested up to: 4.9
-Stable tag: 0.3.1
+Tested up to: 5.0
+Stable tag: 0.4.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
 Puts the slug of posts and pages into an admin column on all posts/pages screen. It helps when page titles don't explain what the page is or too many are similar.
 
 == Description ==
-Simply put, this plugin adds the page and post slug into the admin columns on the All post and All pages view.
-I built this quickly out of necessity to help identify pages and posts by their slug as sometimes the titles clients give them don't match up nicely with the url slug; so here's a fast way to do that. Nothing fancy, just does what it does.
+Simply put, this plugin adds the page/post slug into the admin columns on the "All Posts" and "All Pages" views.
+I built this quickly out of necessity to help identify pages and posts by their slug as sometimes the titles clients make don't match up nicely with the url slug; so here's a fast way to do that. Nothing fancy, just does what it does.
 
 == Installation ==
 1. Upload the `admin-slug-column` directory to the `/wp-content/plugins/` directory
@@ -28,6 +28,15 @@ Built quickly out of necessity to help identify pages and posts by their slug. S
 
 
 == Changelog ==
+= 0.4.0 =
+
+Release Date - 2018-10-26
+
+* [fix]     a sorting issue (sadly doesn't work with parent slug feature (below))
+* [feature] pages now have a root slash and will show the /parent/child slug now
+* added plugin banner and icon for WordPress repo
+* tested to 5.0-beta
+
 = 0.3.1 =
 
 Release Date - 2017-11-14
@@ -38,7 +47,7 @@ Release Date - 2017-11-14
 
 Release Date - 2017-06-14
 
-* tested to 4.8x
+* tested to 4.8.x
 * [feature]  makes the slug column sortable in posts/pages screens
 * [fix]      swapped out deprecated wp function get_page
 * [security] escape output
