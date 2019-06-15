@@ -1,18 +1,18 @@
 === Admin Slug Column ===
 Contributors: ryno267
 Donate link: https://cash.me/$chuckreynolds
-Tags: slug, admin columns, permalink, url, page titles
+Tags: slug, admin columns, permalink, url, url path, page titles
 Requires at least: 3.5
-Tested up to: 5.0
-Stable tag: 0.4.0
+Tested up to: 5.2.2
+Stable tag: 0.5.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
 Puts the slug of posts and pages into an admin column on all posts/pages screen. It helps when page titles don't explain what the page is or too many are similar.
 
 == Description ==
-Simply put, this plugin adds the page/post slug into the admin columns on the "All Posts" and "All Pages" views.
-I built this quickly out of necessity to help identify pages and posts by their slug as sometimes the titles clients make don't match up nicely with the url slug; so here's a fast way to do that. Nothing fancy, just does what it does.
+Simply put, this plugin adds the post slug and page url path into the admin columns on the "All Posts" and "All Pages" views.
+I built this out of necessity to help identify pages and posts by their slug/path as sometimes the title's clients use don't match up nicely with the url slug; so here's a fast way to do that. Nothing fancy, just does what it does.
 
 == Installation ==
 1. Upload the `admin-slug-column` directory to the `/wp-content/plugins/` directory
@@ -28,6 +28,13 @@ Built quickly out of necessity to help identify pages and posts by their slug. S
 
 
 == Changelog ==
+= 0.5.0 =
+
+Release Date - 2019-06-15
+
+* [fix] pages now show the full url path now after the domain.tld, posts still just the slug
+* tested on 5.2.2
+
 = 0.4.0 =
 
 Release Date - 2018-10-26
