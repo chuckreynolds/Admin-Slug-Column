@@ -3,12 +3,12 @@ Contributors: ryno267
 Donate link: https://cash.me/$chuckreynolds
 Tags: slug, admin columns, permalink, url, url path, page titles
 Requires at least: 3.5
-Tested up to: 5.2.2
-Stable tag: 0.5.0
+Tested up to: 5.9.3
+Stable tag: 0.6.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
-Puts the slug of posts and pages into an admin column on all posts/pages screen. It helps when page titles don't explain what the page is or too many are similar.
+Puts the slug of posts and pages (and custom post types of those two types) into an admin column on all posts/pages screens. It's helpful when page titles don't explain what the page is or too many are similar.
 
 == Description ==
 Simply put, this plugin adds the post slug and page url path into the admin columns on the "All Posts" and "All Pages" views.
@@ -28,6 +28,15 @@ Built quickly out of necessity to help identify pages and posts by their slug. S
 
 
 == Changelog ==
+= 0.6.0 =
+
+Release Date - 2022-05-21
+
+* tested on 6.0-RC4
+* [feature] Now on draft, pending, or scheduled posts/pages instead of the ?page_id= showing
+* we display the url path.
+* [fix] Made sure child pages displayed the url path correctly in all instances
+
 = 0.5.0 =
 
 Release Date - 2019-06-15

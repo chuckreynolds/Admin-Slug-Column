@@ -1,18 +1,25 @@
 <?php
 /**
- * @link         https://chuckreynolds.com
- * @since        0.3.0
- * @package      Admin_Slug_Column
+ * Admin Slug Column
  *
- * Plugin Name:  Admin Slug Column
- * Plugin URI:   https://wordpress.org/plugins/admin-slug-column/
- * Description:  Adds the post url slug and page url path to the admin columns on edit screens.
- * Version:      0.5.0
- * Author:       Chuck Reynolds
- * Author URI:   https://chuckreynolds.com
- * License:      GPL-2.0+
- * License URI:  http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:  admin-slug-column
+ * @package           Admin_Slug_Column
+ * @author            Chuck Reynolds
+ * @link              https://chuckreynolds.com
+ * @copyright         2013 Rynoweb LLC
+ * @license           GPL-2.0-or-later
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Admin Slug Column
+ * Plugin URI:        https://github.com/chuckreynolds/Admin-Slug-Column
+ * Description:       Adds the post url slug and page url path to the admin columns on edit screens.
+ * Version:           0.6.0
+ * Requires at least: 5.2
+ * Requires PHP:      7.2
+ * Author:            Chuck Reynolds
+ * Author URI:        https://chuckreynolds.com
+ * Text Domain:       admin-slug-column
+ * License:           GPL v2 or later
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
 // If this file is called directly, abort
@@ -31,11 +38,11 @@ Class WPAdminSlugColumn {
 	* Constructor for WPAdminSlugColumn Class
 	*/
 	public function __construct() {
-		add_action( 'current_screen',                    array( $this, 'WPASC_post_type' ) );
-		add_filter( 'manage_posts_columns',              array( $this, 'WPASC_posts' ) );
-		add_action( 'manage_posts_custom_column',        array( $this, 'WPASC_posts_data' ), 10, 2 );
-		add_filter( 'manage_pages_columns',              array( $this, 'WPASC_posts' ) );
-		add_action( 'manage_pages_custom_column',        array( $this, 'WPASC_posts_data' ), 10, 2 );
+		add_action( 'current_screen',             array( $this, 'WPASC_post_type' ) );
+		add_filter( 'manage_posts_columns',       array( $this, 'WPASC_posts' ) );
+		add_action( 'manage_posts_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
+		add_filter( 'manage_pages_columns',       array( $this, 'WPASC_posts' ) );
+		add_action( 'manage_pages_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
 	}
 
 	/**
@@ -67,25 +74,26 @@ Class WPAdminSlugColumn {
 	 */
 	public function WPASC_posts_data( $column_name, $id ) {
 		if ( $column_name == 'wpasc-slug' ) {
-			$post_info   = get_post( $id, 'string', 'display' );
-			$post_slug   = $post_info->post_name;
-			$post_type   = $post_info->post_type;
-			$post_status = $post_info->post_status;
+			$post_info = get_post( $id, 'string', 'display' );
+				$post_status = $post_info->post_status;
+				$post_name   = $post_info->post_name;
 
-			if ( $post_type === 'page' ) {
-				// Get full permalink but remove domain.tld
-				$post_slug = str_replace( home_url(), '', get_permalink( $id ) );
+			if ( 'draft' === $post_status || 'pending' === $post_status || 'future' === $post_status ) {
+				// unpublished status don't technically a slug yet so we have to use another function
+				$post_draft_url_array = get_sample_permalink( $id );
+				// grab the sample url path from the array and remove host and scheme
+				$post_draft_url_pre = str_replace( get_home_url(), '', $post_draft_url_array[0] );
+				// swap the draft %pagename% holder with the post name
+				$post_slug = str_replace( '%pagename%', $post_name, $post_draft_url_pre );
+				// now that we have the actual url path, because it's a draft lets make it gray
+				$post_slug = '<span style="color: #999;">' . $post_slug . '</span>';
+			} else {
+				// for published and everything else just use the post name and remove host and scheme
+				$post_slug = str_replace( get_home_url(), '', get_permalink( $id ) );
 			}
 
-			if ( $post_type === 'post' ) {
-				// Add root & trailing slash to slug only for published or scheduled pages; ignore drafts
-				if ( $post_status === 'publish' || $post_status === 'future' ) {
-					$post_slug = '/' . $post_slug . '/';
-				}
-			}
-
-			// Echo out what we've got
-			echo esc_attr( $post_slug );
+			// output the slug
+			echo $post_slug;
 		}
 	}
 
