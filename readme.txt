@@ -1,18 +1,21 @@
 === Admin Slug Column ===
 Contributors: ryno267
 Donate link: https://cash.me/$chuckreynolds
-Tags: slug, admin columns, permalink, url, url path, page titles
+Tags: slug, admin columns, permalink, url, url path, uri, page titles
 Requires at least: 3.5
-Tested up to: 5.2.2
-Stable tag: 0.5.0
+Tested up to: 6.0.0
+Stable tag: 1.6.0
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
-Puts the slug of posts and pages into an admin column on all posts/pages screen. It helps when page titles don't explain what the page is or too many are similar.
+Adds a column to admin posts/pages views with the slug & URL path. It's helpful when titles don't explain what the page is, or too many are similar.
 
 == Description ==
-Simply put, this plugin adds the post slug and page url path into the admin columns on the "All Posts" and "All Pages" views.
-I built this out of necessity to help identify pages and posts by their slug/path as sometimes the title's clients use don't match up nicely with the url slug; so here's a fast way to do that. Nothing fancy, just does what it does.
+This plugin adds a column to wp-admin "All Posts" and "All Pages" views displaying the URL path and Slug for each one. This will also show the nested path if a page is a child post of a parent. If a post or page is not published we'll do our best to determine the url path and display that slightly greyed out for quick reference as it's technically not an official URL path or Slug yet. This should also work for custom post types of type page or post, and furthermore this should now, as of v1.6, also display Multibyte characters in slugs for non-latin languages too.
+
+I initially built this out of necessity to quickly identify pages by their slug/path as sometimes the titles that clients used did't match up nicely with the URL slug on the front-end of the site; so here's a fast way to do that. Nothing fancy, just does what it does.
+
+Do you have a feature you'd like or a bug you've found? Feel free to [make an issue on the github repo](https://github.com/chuckreynolds/Admin-Slug-Column/issues).
 
 == Installation ==
 1. Upload the `admin-slug-column` directory to the `/wp-content/plugins/` directory
@@ -21,18 +24,26 @@ I built this out of necessity to help identify pages and posts by their slug/pat
 1. Choose to hide/show the slug column in "Screen Options" tab up top
 
 == Frequently Asked Questions ==
-= Why build this? =
-Built quickly out of necessity to help identify pages and posts by their slug. Sometimes the titles clients have don't always match up nicely with the url slug; so here's a fast way to solve that. Nothing fancy, just does what it does.
 
 == Screenshots ==
 
-
 == Changelog ==
+= 1.6.0 =
+
+Release Date - 2022-05-21
+
+* tested on 6.0-RC4
+*
+* [feature] Multibyte characters are now supported
+* [feature] Now on draft, pending, or scheduled posts/pages instead of the ?page_id= showing we display the URL path.
+* [fix] Made sure child pages displayed the URL path correctly in all instances
+* [411] Regarding the version bump from 0.5 to 1.6. The plugin's been in production forever, I always joked that nothing is every fully not-beta but that joke isn't always appreciated SO... it's a v1 release and .6 major change since inception. It's only coincidence that 1.6.0 matches with WordPress 6.0 release (didn't plan that).
+
 = 0.5.0 =
 
 Release Date - 2019-06-15
 
-* [fix] pages now show the full url path now after the domain.tld, posts still just the slug
+* [fix] pages now show the full URL path now after the domain.tld, posts still just the slug
 * tested on 5.2.2
 
 = 0.4.0 =
