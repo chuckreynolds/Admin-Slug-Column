@@ -15,6 +15,8 @@ This plugin adds a column to wp-admin "All Posts" and "All Pages" views displayi
 
 I initially built this out of necessity to quickly identify pages by their slug/path as sometimes the titles that clients used did't match up nicely with the URL slug on the front-end of the site; so here's a fast way to do that. Nothing fancy, just does what it does.
 
+Do you have a feature you'd like or a bug you've found? Feel free to [make an issue on the github repo](https://github.com/chuckreynolds/Admin-Slug-Column/issues).
+
 == Installation ==
 1. Upload the `admin-slug-column` directory to the `/wp-content/plugins/` directory
 1. Activate the Admin Slug Column plugin through the 'Plugins' menu in WordPress
