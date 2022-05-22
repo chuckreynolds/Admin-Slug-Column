@@ -74,19 +74,18 @@ Class WPAdminSlugColumn {
 	 */
 	public function WPASC_posts_data( $column_name, $id ) {
 		if ( $column_name == 'wpasc-slug' ) {
-			$post_info = get_post( $id, 'string', 'display' );
-				$post_status = $post_info->post_status;
-				$post_name   = $post_info->post_name;
+			$post_info        = get_post( $id, 'string', 'display' );
+			$post_status      = $post_info->post_status;
+			$draft_slug_names = array( '%pagename%', '%postname%' );
 
 			if ( 'draft' === $post_status || 'pending' === $post_status || 'future' === $post_status ) {
 				// unpublished status don't technically a slug yet so we have to use another function
 				$post_draft_url_array = get_sample_permalink( $id );
 				// grab the sample url path from the array and remove host and scheme
 				$post_draft_url_pre = str_replace( get_home_url(), '', $post_draft_url_array[0] );
-				// swap the draft %pagename% holder with the post name
-				$post_slug = str_replace( '%pagename%', $post_name, $post_draft_url_pre );
-				// decode for multibyte character support
-				$post_slug = esc_html( urldecode( $post_slug ) );
+				// swap the draft %pagename% or %postname% holder with the sample permalink
+				$post_slug = str_replace( $draft_slug_names, $post_draft_url_array[1], $post_draft_url_pre );
+				// fyi: mb decoding is already done for us by the get_sample_permalink() array [1]
 				// now that we have the actual url path, because it's a draft lets make it gray
 				$post_slug = '<span style="color: #999;">' . $post_slug . '</span>';
 			} else {
