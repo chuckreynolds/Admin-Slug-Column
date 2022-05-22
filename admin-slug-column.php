@@ -85,11 +85,15 @@ Class WPAdminSlugColumn {
 				$post_draft_url_pre = str_replace( get_home_url(), '', $post_draft_url_array[0] );
 				// swap the draft %pagename% holder with the post name
 				$post_slug = str_replace( '%pagename%', $post_name, $post_draft_url_pre );
+				// decode for multibyte character support
+				$post_slug = esc_html( urldecode( $post_slug ) );
 				// now that we have the actual url path, because it's a draft lets make it gray
 				$post_slug = '<span style="color: #999;">' . $post_slug . '</span>';
 			} else {
 				// for published and everything else just use the post name and remove host and scheme
 				$post_slug = str_replace( get_home_url(), '', get_permalink( $id ) );
+				// decode for multibyte character support
+				$post_slug = esc_html( urldecode( $post_slug ) );
 			}
 
 			// output the slug
