@@ -33,7 +33,6 @@ Do you have a feature you'd like or a bug you've found? Feel free to [make an is
 Release Date - 2022-05-21
 
 * tested on 6.0-RC4
-*
 * [feature] Multibyte characters are now supported
 * [feature] Now on draft, pending, or scheduled posts/pages instead of the ?page_id= showing we display the URL path.
 * [fix] Made sure child pages displayed the URL path correctly in all instances
