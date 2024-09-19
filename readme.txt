@@ -1,14 +1,14 @@
 === Admin Slug Column ===
 Contributors: ryno267
 Donate link: https://cash.me/$chuckreynolds
-Tags: slug, admin columns, permalink, url, url path, uri, page titles
+Tags: slug, admin columns, permalink, url path, page titles
 Requires at least: 3.5
 Tested up to: 6.6.0
 Stable tag: 1.6.1
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
-Adds a column to admin posts/pages views with the slug & URL path. It's helpful when titles don't explain what the page is, or too many are similar.
+Adds a column to admin posts/pages views showing the slug & URL path. Useful when titles are unclear or when many are too similar.
 
 == Description ==
 This plugin adds a column to wp-admin "All Posts" and "All Pages" views displaying the URL path and Slug for each one. This will also show the nested path if a page is a child post of a parent. If a post or page is not published we'll do our best to determine the url path and display that slightly greyed out for quick reference as it's technically not an official URL path or Slug yet. This should also work for custom post types of type page or post, and furthermore this should now, as of v1.6, also display Multibyte characters in slugs for non-latin languages too.
