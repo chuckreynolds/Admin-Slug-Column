@@ -3,8 +3,8 @@ Contributors: ryno267
 Donate link: https://cash.me/$chuckreynolds
 Tags: slug, admin columns, permalink, url, url path, uri, page titles
 Requires at least: 3.5
-Tested up to: 6.0.0
-Stable tag: 1.6.0
+Tested up to: 6.6.0
+Stable tag: 1.6.1
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 
@@ -28,6 +28,12 @@ Do you have a feature you'd like or a bug you've found? Feel free to [make an is
 == Screenshots ==
 
 == Changelog ==
+= 1.6.1 =
+
+Release Date - 2024-09-19
+
+* tested to 6.6.x https://github.com/chuckreynolds/Admin-Slug-Column/issues/17
+
 = 1.6.0 =
 
 Release Date - 2022-05-21
