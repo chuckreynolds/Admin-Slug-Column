@@ -48,25 +48,35 @@ class WPAdminSlugColumn {
 	 * Initialize the plugin
 	 *
 	 * @param WP_Screen $current_screen The current screen object.
+	 * @return void
 	 */
-	public function init( $current_screen ) {
-		if ( ! $current_screen->base === 'edit' ) {
+	public function init( WP_Screen $current_screen ): void {
+		if ( 'edit' !== $current_screen->base ) {
 			return;
 		}
 
-		add_filter( "manage_{$current_screen->post_type}_posts_columns", [ $this, 'add_column' ] );
+		add_filter( "manage_{$current_screen->post_type}_posts_columns", [ $this, 'add_column' ], 10, 1 );
 		add_action( "manage_{$current_screen->post_type}_posts_custom_column", [ $this, 'display_column' ], 10, 2 );
 	}
 
 	/**
 	 * Adds Slug column to Posts list column
 	 *
-	 * @param array $columns An array of column names.
-	 * @return array Modified array of column names.
+	 * @param array<string, string> $columns An array of column names.
+	 * @return array<string, string> Modified array of column names.
 	 */
-	public function add_column( $columns ) {
-		$columns['wpasc-slug'] = __( 'URL Path', 'admin-slug-column' );
-		return $columns;
+	public function add_column( array $columns ): array {
+		$new_columns = [];
+		$insert_after = 'title';
+
+		foreach ( $columns as $key => $value ) {
+			$new_columns[ $key ] = $value;
+			if ( $key === $insert_after ) {
+				$new_columns['wpasc-slug'] = __( 'URL Path', 'admin-slug-column' );
+			}
+		}
+
+		return $new_columns;
 	}
 
 	/**
@@ -74,16 +84,19 @@ class WPAdminSlugColumn {
 	 *
 	 * @param string $column_name Name of the column.
 	 * @param int    $post_id     Post ID.
+	 * @return void
 	 */
-	public function display_column( $column_name, $post_id ) {
+	public function display_column( string $column_name, int $post_id ): void {
 		if ( 'wpasc-slug' !== $column_name ) {
 			return;
 		}
 
 		$post = get_post( $post_id );
-		$post_status = $post->post_status;
+		if ( ! $post instanceof WP_Post ) {
+			return;
+		}
 
-		if ( in_array( $post_status, [ 'draft', 'pending', 'future' ], true ) ) {
+		if ( in_array( $post->post_status, [ 'draft', 'pending', 'future' ], true ) ) {
 			$this->display_draft_slug( $post_id );
 		} else {
 			$this->display_published_slug( $post_id );
@@ -94,23 +107,43 @@ class WPAdminSlugColumn {
 	 * Displays the slug for draft, pending, or future posts
 	 *
 	 * @param int $post_id Post ID.
+	 * @return void
 	 */
-	private function display_draft_slug( $post_id ) {
+	private function display_draft_slug( int $post_id ): void {
 		$post_draft_url_array = get_sample_permalink( $post_id );
+		if ( ! is_array( $post_draft_url_array ) || count( $post_draft_url_array ) !== 2 ) {
+			return;
+		}
+
 		$post_draft_url_pre = str_replace( home_url(), '', $post_draft_url_array[0] );
 		$post_slug = str_replace( [ '%pagename%', '%postname%' ], $post_draft_url_array[1], $post_draft_url_pre );
-		echo '<span style="color: #999;">' . esc_html( $post_slug ) . '</span>';
+		printf(
+			'<span style="color: #999;">%s</span>',
+			esc_html( wp_strip_all_tags( $post_slug ) )
+		);
 	}
 
 	/**
 	 * Displays the slug for published posts
 	 *
 	 * @param int $post_id Post ID.
+	 * @return void
 	 */
-	private function display_published_slug( $post_id ) {
-		$post_slug = str_replace( home_url(), '', get_permalink( $post_id ) );
-		echo esc_html( urldecode( $post_slug ) );
+	private function display_published_slug( int $post_id ): void {
+		$permalink = get_permalink( $post_id );
+		if ( ! is_string( $permalink ) ) {
+			return;
+		}
+
+		$post_slug = str_replace( home_url(), '', $permalink );
+		printf(
+			'%s',
+			esc_html( wp_strip_all_tags( urldecode( $post_slug ) ) )
+		);
 	}
 }
 
-new WPAdminSlugColumn();
+// Initialize the plugin
+add_action( 'plugins_loaded', function() {
+	new WPAdminSlugColumn();
+});
