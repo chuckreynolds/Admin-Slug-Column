@@ -32,12 +32,13 @@ Do you have a feature you'd like or a bug you've found? Feel free to [make an is
 
 Release Date - 2025-06-27
 
-* [refactor] Refactored to use dynamic hooks based on post type for proper CPT support
+* [refactor] Dynamic hooks based on post type for proper CPT support
 * [refactor] Column now inserts after "title" instead of appending to end
 * [refactor] Split display logic into separate private methods for draft and published posts
-* [security] Added output escaping and wp_strip_all_tags to all column output
+* [refactor] Pass WP_Post object through to avoid redundant get_post() calls per row
+* [security] Proper output escaping on all column output paths
 * [fix] Added WP_Post instanceof check and permalink string check before output
-* bump PHP requirement to 7.4
+* bump PHP requirement to 8.0
 
 = 1.6.1 =
 

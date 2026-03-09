@@ -14,7 +14,7 @@
  * Description:       Adds the post URL slug and page URL path to the admin columns on edit screens.
  * Version:           1.7.0
  * Requires at least: 5.2
- * Requires PHP:      7.4
+ * Requires PHP:      8.0
  * Author:            Chuck Reynolds
  * Author URI:        https://chuckreynolds.com
  * Text Domain:       admin-slug-column
@@ -97,46 +97,47 @@ class WPAdminSlugColumn {
 		}
 
 		if ( in_array( $post->post_status, [ 'draft', 'pending', 'future' ], true ) ) {
-			$this->display_draft_slug( $post_id );
+			$this->display_draft_slug( $post );
 		} else {
-			$this->display_published_slug( $post_id );
+			$this->display_published_slug( $post );
 		}
 	}
 
 	/**
 	 * Displays the slug for draft, pending, or future posts
 	 *
-	 * @param int $post_id Post ID.
+	 * @param WP_Post $post Post object.
 	 * @return void
 	 */
-	private function display_draft_slug( int $post_id ): void {
-		$post_draft_url_array = get_sample_permalink( $post_id );
+	private function display_draft_slug( WP_Post $post ): void {
+		$post_draft_url_array = get_sample_permalink( $post );
 		if ( ! is_array( $post_draft_url_array ) || count( $post_draft_url_array ) !== 2 ) {
 			return;
 		}
 
 		$post_draft_url_pre = str_replace( home_url(), '', $post_draft_url_array[0] );
+		// urldecode() not needed here; get_sample_permalink()[1] already handles multibyte decoding.
 		$post_slug = str_replace( [ '%pagename%', '%postname%' ], $post_draft_url_array[1], $post_draft_url_pre );
 		printf(
 			'<span style="color: #999;">%s</span>',
-			esc_html( wp_strip_all_tags( $post_slug ) )
+			esc_html( $post_slug )
 		);
 	}
 
 	/**
 	 * Displays the slug for published posts
 	 *
-	 * @param int $post_id Post ID.
+	 * @param WP_Post $post Post object.
 	 * @return void
 	 */
-	private function display_published_slug( int $post_id ): void {
-		$permalink = get_permalink( $post_id );
+	private function display_published_slug( WP_Post $post ): void {
+		$permalink = get_permalink( $post );
 		if ( ! is_string( $permalink ) ) {
 			return;
 		}
 
 		$post_slug = str_replace( home_url(), '', $permalink );
-		echo esc_html( wp_strip_all_tags( urldecode( $post_slug ) ) );
+		echo esc_html( urldecode( $post_slug ) );
 	}
 }
 
