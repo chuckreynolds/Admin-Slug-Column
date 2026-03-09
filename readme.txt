@@ -3,10 +3,10 @@ Contributors: ryno267
 Donate link: https://cash.me/$chuckreynolds
 Tags: slug, admin columns, permalink, url path, page titles
 Requires at least: 3.5
-Tested up to: 6.6.0
-Stable tag: 1.6.1
-License: GPL-2.0+
-License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+Tested up to: 6.8.1
+Stable tag: 1.7.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Adds a column to admin posts/pages views showing the slug & URL path. Useful when titles are unclear or when many are too similar.
 
