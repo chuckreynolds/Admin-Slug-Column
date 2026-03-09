@@ -2,7 +2,7 @@
 Contributors: ryno267
 Donate link: https://cash.me/$chuckreynolds
 Tags: slug, admin columns, permalink, url path, page titles
-Requires at least: 3.5
+Requires at least: 5.2
 Tested up to: 6.8.1
 Stable tag: 1.7.0
 License: GPLv2 or later
@@ -28,6 +28,17 @@ Do you have a feature you'd like or a bug you've found? Feel free to [make an is
 == Screenshots ==
 
 == Changelog ==
+= 1.7.0 =
+
+Release Date - 2025-06-27
+
+* [refactor] Refactored to use dynamic hooks based on post type for proper CPT support
+* [refactor] Column now inserts after "title" instead of appending to end
+* [refactor] Split display logic into separate private methods for draft and published posts
+* [security] Added output escaping and wp_strip_all_tags to all column output
+* [fix] Added WP_Post instanceof check and permalink string check before output
+* bump PHP requirement to 7.4
+
 = 1.6.1 =
 
 Release Date - 2024-09-19

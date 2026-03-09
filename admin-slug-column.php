@@ -136,14 +136,12 @@ class WPAdminSlugColumn {
 		}
 
 		$post_slug = str_replace( home_url(), '', $permalink );
-		printf(
-			'%s',
-			esc_html( wp_strip_all_tags( urldecode( $post_slug ) ) )
-		);
+		echo esc_html( wp_strip_all_tags( urldecode( $post_slug ) ) );
 	}
 }
 
 // Initialize the plugin
 add_action( 'plugins_loaded', function() {
 	new WPAdminSlugColumn();
-});
+} );
+
