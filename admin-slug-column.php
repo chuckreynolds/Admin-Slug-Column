@@ -11,95 +11,139 @@
  * @wordpress-plugin
  * Plugin Name:       Admin Slug Column
  * Plugin URI:        https://github.com/chuckreynolds/Admin-Slug-Column
- * Description:       Adds the post url slug and page url path to the admin columns on edit screens.
- * Version:           1.6.1
+ * Description:       Adds the URL path to the admin columns on all post type edit screens.
+ * Version:           2.0.0
  * Requires at least: 5.2
- * Requires PHP:      7.2
+ * Requires PHP:      8.0
  * Author:            Chuck Reynolds
  * Author URI:        https://chuckreynolds.com
  * Text Domain:       admin-slug-column
- * License:           GPL v2 or later
+ * License:           GPLv2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-// If this file is called directly, abort
+// If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
 // Only run plugin in the admin
 if ( ! is_admin() ) {
-	return false;
+	return;
 }
 
-Class WPAdminSlugColumn {
+/**
+ * Class WPAdminSlugColumn
+ */
+class WPAdminSlugColumn {
 
 	/**
-	* Constructor for WPAdminSlugColumn Class
-	*/
+	 * Constructor for WPAdminSlugColumn Class
+	 */
 	public function __construct() {
-		add_action( 'current_screen',             array( $this, 'WPASC_post_type' ) );
-		add_filter( 'manage_posts_columns',       array( $this, 'WPASC_posts' ) );
-		add_action( 'manage_posts_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
-		add_filter( 'manage_pages_columns',       array( $this, 'WPASC_posts' ) );
-		add_action( 'manage_pages_custom_column', array( $this, 'WPASC_posts_data' ), 10, 2 );
+		add_action( 'current_screen', [ $this, 'init' ] );
 	}
 
 	/**
-	 * Returns an object that includes the current screen's post type
+	 * Initialize the plugin
 	 *
-	 * @see https://developer.wordpress.org/reference/functions/get_current_screen/
+	 * @param WP_Screen $current_screen The current screen object.
+	 * @return void
 	 */
-	public function WPASC_post_type() {
-		return get_current_screen()->post_type;
+	public function init( WP_Screen $current_screen ): void {
+		if ( 'edit' !== $current_screen->base ) {
+			return;
+		}
+
+		add_filter( "manage_{$current_screen->post_type}_posts_columns", [ $this, 'add_column' ], 10, 1 );
+		add_action( "manage_{$current_screen->post_type}_posts_custom_column", [ $this, 'display_column' ], 10, 2 );
 	}
 
 	/**
 	 * Adds Slug column to Posts list column
 	 *
-	 * @param array $defaults An array of column names
+	 * @param array<string, string> $columns An array of column names.
+	 * @return array<string, string> Modified array of column names.
 	 */
-	public function WPASC_posts( $defaults ) {
-		$defaults['wpasc-slug'] = __( 'URL Path', 'admin-slug-column' );
-		return $defaults;
+	public function add_column( array $columns ): array {
+		$new_columns = [];
+		$insert_after = 'title';
+
+		foreach ( $columns as $key => $value ) {
+			$new_columns[ $key ] = $value;
+			if ( $key === $insert_after ) {
+				$new_columns['wpasc-slug'] = __( 'URL Path', 'admin-slug-column' );
+			}
+		}
+
+		return $new_columns;
 	}
 
 	/**
-	 * Gets the post info from get_post function and displays the slug and/or path
+	 * Displays the slug and/or path in the custom column
 	 *
-	 * @param string $column_name Name of the column
-	 * @param int    $id          post id
-	 *
-	 * @see https://developer.wordpress.org/reference/functions/get_post/
+	 * @param string $column_name Name of the column.
+	 * @param int    $post_id     Post ID.
+	 * @return void
 	 */
-	public function WPASC_posts_data( $column_name, $id ) {
-		if ( $column_name == 'wpasc-slug' ) {
-			$post_info        = get_post( $id, 'string', 'display' );
-			$post_status      = $post_info->post_status;
-			$draft_slug_names = array( '%pagename%', '%postname%' );
+	public function display_column( string $column_name, int $post_id ): void {
+		if ( 'wpasc-slug' !== $column_name ) {
+			return;
+		}
 
-			if ( 'draft' === $post_status || 'pending' === $post_status || 'future' === $post_status ) {
-				// unpublished status don't technically a slug yet so we have to use another function
-				$post_draft_url_array = get_sample_permalink( $id );
-				// grab the sample url path from the array and remove host and scheme
-				$post_draft_url_pre = str_replace( get_home_url(), '', $post_draft_url_array[0] );
-				// swap the draft %pagename% or %postname% holder with the sample permalink
-				$post_slug = str_replace( $draft_slug_names, $post_draft_url_array[1], $post_draft_url_pre );
-				// fyi: mb decoding is already done for us by the get_sample_permalink() array [1]
-				// now that we have the actual url path, because it's a draft lets make it gray
-				$post_slug = '<span style="color: #999;">' . $post_slug . '</span>';
-			} else {
-				// for published and everything else just use the post name and remove host and scheme
-				$post_slug = str_replace( get_home_url(), '', get_permalink( $id ) );
-				// decode for multibyte character support
-				$post_slug = esc_html( urldecode( $post_slug ) );
-			}
+		$post = get_post( $post_id );
+		if ( ! $post instanceof WP_Post ) {
+			return;
+		}
 
-			// output the slug
-			echo $post_slug;
+		if ( in_array( $post->post_status, [ 'draft', 'pending', 'future' ], true ) ) {
+			$this->display_draft_slug( $post );
+		} else {
+			$this->display_published_slug( $post );
 		}
 	}
 
+	/**
+	 * Displays the slug for draft, pending, or future posts
+	 *
+	 * @param WP_Post $post Post object.
+	 * @return void
+	 */
+	private function display_draft_slug( WP_Post $post ): void {
+		$post_draft_url_array = get_sample_permalink( $post );
+		if ( ! is_array( $post_draft_url_array ) || count( $post_draft_url_array ) !== 2 ) {
+			return;
+		}
+
+		$post_draft_url_pre = str_replace( home_url(), '', $post_draft_url_array[0] );
+		// urldecode() not needed here; get_sample_permalink()[1] already handles multibyte decoding.
+		// preg_replace handles any CPT rewrite tag placeholder, not just %postname%/%pagename%.
+		$post_slug = preg_replace( '/%[^%]+%/', $post_draft_url_array[1], $post_draft_url_pre );
+		printf(
+			'<span style="color: #999;">%s</span>',
+			esc_html( $post_slug )
+		);
+	}
+
+	/**
+	 * Displays the slug for published posts
+	 *
+	 * @param WP_Post $post Post object.
+	 * @return void
+	 */
+	private function display_published_slug( WP_Post $post ): void {
+		$permalink = get_permalink( $post );
+		if ( ! is_string( $permalink ) ) {
+			return;
+		}
+
+		$post_slug = str_replace( home_url(), '', $permalink );
+		echo esc_html( urldecode( $post_slug ) );
+	}
 }
 
-$WPAdminSlugColumn = new WPAdminSlugColumn();
+// Initialize the plugin
+add_action( 'plugins_loaded', function() {
+	new WPAdminSlugColumn();
+} );
+

@@ -2,7 +2,7 @@
 
 This is the working development repo for the Admin Slug Column WordPress plugin located here: https://wordpress.org/plugins/admin-slug-column/
 
-This plugin adds a column to wp-admin "All Posts" and "All Pages" views displaying the URL path and Slug for each one. This will also show the nested path if a page is a child post of a parent. If a post or page is not published we'll do our best to determine the url path and display that slightly greyed out for quick reference as it's technically not an official URL path or Slug yet. This should also work for custom post types of type page or post, and furthermore this should now, as of v1.6, also display Multibyte characters in slugs for non-latin languages too.
+This plugin adds a URL path column to the edit screens for all post types — posts, pages, and any custom post type including WooCommerce products. Child pages show the full nested path. For drafts, pending, and scheduled content the URL path is shown slightly greyed out since it isn't an official URL yet. Multibyte characters in slugs (non-latin languages) are fully supported.
 
 I initially built this out of necessity to quickly identify pages by their slug/path as sometimes the titles that clients used did't match up nicely with the URL slug on the front-end of the site; so here's a fast way to do that. Nothing fancy, just does what it does.
 
