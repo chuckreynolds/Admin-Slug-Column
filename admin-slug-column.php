@@ -11,8 +11,8 @@
  * @wordpress-plugin
  * Plugin Name:       Admin Slug Column
  * Plugin URI:        https://github.com/chuckreynolds/Admin-Slug-Column
- * Description:       Adds the post URL slug and page URL path to the admin columns on edit screens.
- * Version:           1.7.0
+ * Description:       Adds the URL path to the admin columns on all post type edit screens.
+ * Version:           2.0.0
  * Requires at least: 5.2
  * Requires PHP:      8.0
  * Author:            Chuck Reynolds
@@ -117,7 +117,8 @@ class WPAdminSlugColumn {
 
 		$post_draft_url_pre = str_replace( home_url(), '', $post_draft_url_array[0] );
 		// urldecode() not needed here; get_sample_permalink()[1] already handles multibyte decoding.
-		$post_slug = str_replace( [ '%pagename%', '%postname%' ], $post_draft_url_array[1], $post_draft_url_pre );
+		// preg_replace handles any CPT rewrite tag placeholder, not just %postname%/%pagename%.
+		$post_slug = preg_replace( '/%[^%]+%/', $post_draft_url_array[1], $post_draft_url_pre );
 		printf(
 			'<span style="color: #999;">%s</span>',
 			esc_html( $post_slug )

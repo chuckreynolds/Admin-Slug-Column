@@ -1,17 +1,17 @@
 === Admin Slug Column ===
 Contributors: ryno267
-Donate link: https://cash.me/$chuckreynolds
+Donate link: https://buymeacoffee.com/chuck
 Tags: slug, admin columns, permalink, url path, page titles
 Requires at least: 5.2
-Tested up to: 6.8.1
-Stable tag: 1.7.0
+Tested up to: 6.9.1
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Adds a column to admin posts/pages views showing the slug & URL path. Useful when titles are unclear or when many are too similar.
+Adds a URL path column to all admin post type edit screens. Works with posts, pages, and any custom post type including WooCommerce products.
 
 == Description ==
-This plugin adds a column to wp-admin "All Posts" and "All Pages" views displaying the URL path and Slug for each one. This will also show the nested path if a page is a child post of a parent. If a post or page is not published we'll do our best to determine the url path and display that slightly greyed out for quick reference as it's technically not an official URL path or Slug yet. This should also work for custom post types of type page or post, and furthermore this should now, as of v1.6, also display Multibyte characters in slugs for non-latin languages too.
+This plugin adds a URL path column to the edit screens for all post types — posts, pages, and any custom post type including WooCommerce products. Child pages show the full nested path. For drafts, pending, and scheduled content the URL path is shown slightly greyed out since it isn't an official URL yet. Multibyte characters in slugs (non-latin languages) are fully supported.
 
 I initially built this out of necessity to quickly identify pages by their slug/path as sometimes the titles that clients used did't match up nicely with the URL slug on the front-end of the site; so here's a fast way to do that. Nothing fancy, just does what it does.
 
@@ -28,17 +28,19 @@ Do you have a feature you'd like or a bug you've found? Feel free to [make an is
 == Screenshots ==
 
 == Changelog ==
-= 1.7.0 =
+= 2.0.0 =
 
-Release Date - 2025-06-27
+Release Date - 2026-03-09
 
-* [refactor] Dynamic hooks based on post type for proper CPT support
-* [refactor] Column now inserts after "title" instead of appending to end
-* [refactor] Split display logic into separate private methods for draft and published posts
-* [refactor] Pass WP_Post object through to avoid redundant get_post() calls per row
+* [breaking] PHP requirement bumped to 8.0
+* [refactor] Full OOP refactor — dynamic hooks based on current screen post type
+* [refactor] Column now inserts after "Title" instead of appending to end
+* [refactor] Split display logic into private methods for draft and published posts
 * [security] Proper output escaping on all column output paths
+* [fix] Draft slug now correctly resolves placeholder for any CPT rewrite tag, not just %postname%/%pagename%
 * [fix] Added WP_Post instanceof check and permalink string check before output
-* bump PHP requirement to 8.0
+* Confirmed working with custom post types and WooCommerce products
+* Tested up to WordPress 6.9.1
 
 = 1.6.1 =
 
