@@ -3,8 +3,8 @@ Contributors: ryno267
 Donate link: https://buymeacoffee.com/chuck
 Tags: slug, admin columns, permalink, url path, page titles
 Requires at least: 5.2
-Tested up to: 6.9.1
-Stable tag: 2.0.0
+Tested up to: 7.1
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,13 @@ Do you have a feature you'd like or a bug you've found? Feel free to [make an is
 == Screenshots ==
 
 == Changelog ==
+= 2.0.1 =
+
+Release Date - 2026-08-19
+
+* Tested up to WordPress 7.1
+* No functional changes. Verified on 7.1 across posts, pages, custom post types, drafts, and the Quick Edit inline-save path.
+
 = 2.0.0 =
 
 Release Date - 2026-03-09
