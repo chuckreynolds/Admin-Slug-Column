@@ -12,9 +12,9 @@
  * Plugin Name:       Admin Slug Column
  * Plugin URI:        https://github.com/chuckreynolds/Admin-Slug-Column
  * Description:       Adds the URL path to the admin columns on all post type edit screens.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Requires at least: 5.2
- * Requires PHP:      8.0
+ * Requires PHP:      7.4
  * Author:            Chuck Reynolds
  * Author URI:        https://chuckreynolds.com
  * Text Domain:       admin-slug-column
